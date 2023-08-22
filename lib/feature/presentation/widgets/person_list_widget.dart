@@ -30,7 +30,7 @@ class PersonList extends StatelessWidget {
         bool isLoading = false;
 
         if (state is PersonLoading && state.isFirstFetch) {
-          return _loadingIndicator(); 
+          return _loadingIndicator();
         } else if (state is PersonLoading) {
           people = state.oldPersonList;
           isLoading = true;
@@ -38,8 +38,10 @@ class PersonList extends StatelessWidget {
           people = state.personList;
         } else if (state is PersonError) {
           return Center(
-            child: Text(state.message,
-                style: const TextStyle(color: Colors.white)),
+            child: Text(
+              state.message,
+              style: const TextStyle(color: Colors.white),
+            ),
           );
         }
         return ListView.separated(
@@ -49,14 +51,16 @@ class PersonList extends StatelessWidget {
               return PersonCard(person: people[index]);
             } else {
               Timer(const Duration(milliseconds: 30), () {
-                scrollController
-                    .jumpTo(scrollController.position.maxScrollExtent);
+                scrollController.jumpTo(
+                  scrollController.position.maxScrollExtent,
+                );
               });
               return _loadingIndicator();
             }
           },
-          separatorBuilder: (context, index) =>
-              Divider(color: Colors.grey[400]),
+          separatorBuilder: (context, index) => Divider(
+            color: Colors.grey[400],
+          ),
           itemCount: people.length + (isLoading ? 1 : 0),
         );
       },
